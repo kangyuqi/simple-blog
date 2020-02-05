@@ -4,6 +4,9 @@
 import os
 from flask import Flask
 
+from simple_blog.blueprints.admin import admin_bp
+from simple_blog.blueprints.auth import auth_bp
+from simple_blog.blueprints.blog import blog_bp
 from simple_blog.settings import config
 from simple_blog.extensions import bootstrap, db, moment, ckeditor, mail
 
@@ -20,5 +23,9 @@ def create_app(config_name=None):
     moment.init_app(app)
     ckeditor.init_app(app)
     mail.init_app(app)
+
+    app.register_blueprint(blog_bp)
+    app.register_blueprint(admin_bp, url_prefix='/admin')
+    app.register_blueprint(auth_bp, url_prefix='/auth')
 
     return app
