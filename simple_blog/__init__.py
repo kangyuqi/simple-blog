@@ -5,6 +5,7 @@ import os
 from flask import Flask
 
 from simple_blog.settings import config
+from simple_blog.extensions import bootstrap, db, moment, ckeditor, mail
 
 
 def create_app(config_name=None):
@@ -13,5 +14,11 @@ def create_app(config_name=None):
 
     app = Flask('simple_blog')
     app.config.from_object(config[config_name])
+
+    bootstrap.init_app(app)
+    db.init_app(app)
+    moment.init_app(app)
+    ckeditor.init_app(app)
+    mail.init_app(app)
 
     return app
